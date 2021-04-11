@@ -1,0 +1,28 @@
+DECLARE
+ --声明一个变量类型时一定要给出变量的长度范围
+ a VARCHAR2(20);
+BEGIN
+---在此条件下会输出FALSE,说明在数据库中时间比较时，过去的时间比当前时间要小
+IF(TO_DATE('06-2018','MM-YYYY') < TO_DATE('05-2018','MM-YYYY')  ) THEN
+     ---在块中或者过程中的的select语句必须带into，从而能够绑定变量
+     SELECT 'TRUE' INTO a FROM DUAL;
+ELSE
+     SELECT 'FALSE' INTO a  FROM DUAL;            
+END IF;
+--输出为FALSE
+dbms_output.put_line(a);
+/*
+ to_char(日期，日期的字符串格式)
+ 年year：Y或y表示年的最后1位，YY或yy表示年的最后2位，YYY或yyy表示年的最后3位,YYYY或yyyy用4位数字表示年
+ 月month: m(MM)用两位数字表示月，比如08；mon(MON)表示方法如：8月或者aug;month(MONTH)表示如：8月或August；
+ 日day: dd(DD)表示当月第几天,ddd(DDD)当年第几天,dy(DY)当周第几天简写：星期五或者fri,day(DAY)当周第几天全写星期五或friday
+ 时hour：hh 2位数表示小时 12进制； hh24 2位数表示小时 24小时
+ 分minute：mi 2位数表示分钟
+ 秒second：ss 2位数表示秒 60进制
+ 季度：q 一位数 表示季度 （1-4）
+ 另外还有ww 用来表示当年第几周 w用来表示当月第几周。
+ 24小时制下的时间范围：00：00：00-23：59：59
+ 12小时制下的时间范围：1：00：00-12：59：59
+*/
+dbms_output.put_line(to_char(sysdate, 'MMYYYY'));
+END;
